@@ -1,9 +1,19 @@
 function expect(actual) {
+  let negated = false;
   return {
     toEqual(expected) {
-      console.assert(actual === expected, `Expected: ${expected}. Actual: ${actual}`);
+      let result = actual === expected;
+      if (negated) {
+        result = !result;
+      }
+      console.assert(result, `Expected: ${expected}. Actual: ${actual}`);
+    },
+    get not() {
+      negated = true;
+      return this;
     }
   }
 }
 
 expect(true).toEqual(true);
+expect(true).not.toEqual(false);
