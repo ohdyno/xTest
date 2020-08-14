@@ -2,12 +2,9 @@
   "scripts": {
     "start": "snowpack dev",
     "build": "snowpack build",
-    "test": "echo \"This template does not include a test runner by default.\" && exit 1",
+    "test": "npm run start # tests should be running live in the browser",
     "format": "prettier --write \"src/**/*.js\"",
     "lint": "prettier --check \"src/**/*.js\""
-  },
-  "dependencies": {
-    "canvas-confetti": "^1.2.0"
   },
   "devDependencies": {
     "prettier": "^2.0.5",

@@ -1,11 +1,9 @@
-/**
- * This file is just a silly example to show everything working in the browser.
- * When you're ready to start on your site, clear the file. Happy hacking!
- **/
+function expect(actual) {
+  return {
+    toEqual(expected) {
+      console.assert(actual === expected, `Expected: ${expected}. Actual: ${actual}`);
+    }
+  }
+}
 
-import confetti from 'canvas-confetti';
-
-confetti.create(document.getElementById('canvas'), {
-  resize: true,
-  useWorker: true,
-})({ particleCount: 200, spread: 200 });
+expect(true).toEqual(true);
