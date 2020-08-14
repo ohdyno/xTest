@@ -1,28 +1,44 @@
+import _ from 'lodash-es';
+
 const xTest = {
-  expect(actual) {
-    let negated = false;
+  test(name, t) {
+    let testCase = {};
+    testCase.expect = (actual) => {
+      let negated = false;
+      return {
+        toEqual(expected) {
+          let test;
+          let message;
+          if (negated) {
+            message = `Expected '${JSON.stringify(
+              actual,
+            )}' to not equal '${JSON.stringify(expected)}'`;
+            test = () => !_.isEqual(actual, expected);
+          } else {
+            message = `Expected '${JSON.stringify(
+              actual,
+            )}' to equal '${JSON.stringify(expected)}'`;
+            test = () => _.isEqual(actual, expected);
+          }
+          console.assert(test(), message);
+          let result = {
+            actual,
+            expected,
+            message,
+          };
+          testCase.result = result;
+          return result;
+        },
+        get not() {
+          negated = true;
+          return this;
+        },
+      };
+    };
+    t(testCase);
     return {
-      toEqual(expected) {
-        let test;
-        let message;
-        if (negated) {
-          message = `Expected '${actual}' to not equal '${expected}'`;
-          test = () => actual !== expected;
-        } else {
-          message = `Expected '${actual}' to equal '${expected}'`;
-          test = () => actual === expected;
-        }
-        console.assert(test(), message);
-        return {
-          actual,
-          expected,
-          message,
-        };
-      },
-      get not() {
-        negated = true;
-        return this;
-      },
+      name,
+      result: testCase.result,
     };
   },
 };

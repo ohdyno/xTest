@@ -1,9 +1,14 @@
 import xTest from './xTest';
 
-xTest.expect(true).toEqual(true);
-xTest.expect(true).not.toEqual(false);
+xTest.test('test case', (t) => {
+  let testCase = xTest.test('test name', (t) => {
+    t.expect(true).toEqual(true);
+  });
 
-let result = xTest.expect(true).toEqual(true);
-xTest.expect(result.message).toEqual(`Expected '${true}' to equal '${true}'`);
-xTest.expect(result.actual).toEqual(true);
-xTest.expect(result.expected).toEqual(true);
+  t.expect(testCase.name).toEqual('test name');
+  t.expect(testCase.result).toEqual({
+    actual: true,
+    expected: true,
+    message: `Expected '${true}' to equal '${true}'`,
+  });
+});
