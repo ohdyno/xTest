@@ -33,22 +33,31 @@ let expect = (resultRecorder) => (actual) => {
   };
 };
 
-const xTest = {
-  test(name, t) {
-    let testCase = {};
-    testCase.record = (r) => {
-      testCase.result = r;
-    };
+let test = (name, t) => {
+  let testCase = {};
+  testCase.record = (r) => {
+    testCase.result = r;
+  };
 
-    testCase.expect = expect(testCase);
+  testCase.expect = expect(testCase);
 
-    t(testCase);
+  t(testCase);
 
-    return {
-      name,
-      result: testCase.result,
-    };
-  },
+  return {
+    name,
+    result: testCase.result,
+  };
 };
+
+const xTest = (testCaseRecorder) => {
+  return {
+    test: (name, t) => {
+      let result = test(name, t);
+      testCaseRecorder(result);
+    },
+  };
+};
+
+xTest.test = test;
 
 export default xTest;
