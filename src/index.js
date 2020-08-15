@@ -1,7 +1,21 @@
 import xTest from './xTest';
 
-xTest.test('positive test case', (t) => {
-  let testCase = xTest.test('positive test case', (t) => {
+let printToDocument = (result) => {
+  let element = document.createElement('p');
+  element.setAttribute('class', 'test-result');
+  element.innerText = JSON.stringify(result);
+  document.body.appendChild(element);
+};
+
+let deleteAll = () => {
+  let results = document.getElementsByClassName('test-result');
+  for (let i = 0; i < results.length; i++) {
+    results[i].remove();
+  }
+};
+
+xTest(printToDocument).test('positive test case', (t) => {
+  let testCase = xTest().test('positive test case', (t) => {
     t.expect(true).toEqual(true);
   });
 
@@ -13,8 +27,10 @@ xTest.test('positive test case', (t) => {
   });
 });
 
-xTest.test('negative test case', (t) => {
-  let testCase = xTest.test('negative test case', (t) => {
+deleteAll();
+
+xTest(printToDocument).test('negative test case', (t) => {
+  let testCase = xTest().test('negative test case', (t) => {
     t.expect(true).not.toEqual(false);
   });
 
@@ -26,17 +42,14 @@ xTest.test('negative test case', (t) => {
   });
 });
 
-xTest.test('print test result to document', (t) => {
-  let printToDocument = (result) => {
-    let element = document.createElement('p');
-    element.setAttribute('class', 'test-result');
-    element.innerText = JSON.stringify(result);
-    document.body.appendChild(element);
-  };
+deleteAll();
 
+xTest().test('print test result to document', (t) => {
   xTest(printToDocument).test('negative test case', (t) => {
     t.expect(true).not.toEqual(false);
   });
 
   t.expect(document.getElementsByClassName('test-result').length).toEqual(1);
 });
+
+deleteAll();

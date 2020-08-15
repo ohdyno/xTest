@@ -49,11 +49,12 @@ let test = (name, t) => {
   };
 };
 
-const xTest = (testCaseRecorder) => {
+const xTest = (testCaseRecorder = () => {}) => {
   return {
     test: (name, t) => {
       let result = test(name, t);
       testCaseRecorder(result);
+      return result;
     },
   };
 };
