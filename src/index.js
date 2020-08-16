@@ -1,28 +1,28 @@
 import xTest from './xTest';
 
-let DOMReporter = (result) => {
-  let testSuiteReport = document.createElement('ul');
-  testSuiteReport.setAttribute('class', 'test-suite');
-  let testSuite = document.createElement('li');
-  testSuiteReport.appendChild(testSuite);
-  testSuite.innerText = result.name;
+let DOMReporter = (completedSuite) => {
+  let report = document.createElement('ul');
+  report.setAttribute('class', 'test-suite');
+  let suite = document.createElement('li');
+  report.appendChild(suite);
+  suite.innerText = completedSuite.name;
 
-  let testSuiteResults = document.createElement('ul');
-  testSuiteResults.setAttribute('class', 'test-results');
-  let testSuiteResult = document.createElement('li');
-  testSuiteResult.setAttribute('class', 'test-result');
-  testSuiteResult.innerText = result.results.name;
-  let testSuiteResultDetails = document.createElement('ul');
-  testSuiteResultDetails.setAttribute('class', 'test-result-details');
+  let cases = document.createElement('ul');
+  cases.setAttribute('class', 'test-cases');
+  let aCase = document.createElement('li');
+  aCase.setAttribute('class', 'test-case');
+  aCase.innerText = completedSuite.results.name;
+  let caseDetails = document.createElement('ul');
+  caseDetails.setAttribute('class', 'test-case-details');
   let message = document.createElement('li');
-  message.setAttribute('class', 'test-result-message');
-  message.innerText = result.results.result.message;
+  message.setAttribute('class', 'test-case-message');
+  message.innerText = completedSuite.results.result.message;
 
-  testSuiteResultDetails.appendChild(message);
-  testSuiteResult.appendChild(testSuiteResultDetails);
-  testSuiteResults.appendChild(testSuiteResult);
-  testSuite.appendChild(testSuiteResults);
-  document.body.appendChild(testSuiteReport);
+  caseDetails.appendChild(message);
+  aCase.appendChild(caseDetails);
+  cases.appendChild(aCase);
+  suite.appendChild(cases);
+  document.body.appendChild(report);
 };
 
 xTest().test('print test result to document', (t) => {
@@ -32,20 +32,17 @@ xTest().test('print test result to document', (t) => {
     t.expect('foo').not.toEqual('bar');
   });
 
-  let displayedTestResults = document.getElementsByClassName('test-result');
-  t.expect(displayedTestResults.length).toEqual(0);
-
   testSuite.finish();
 
-  t.expect(displayedTestResults.length).toEqual(1);
-  let displayedTestResult = displayedTestResults[0];
+  let testCases = document.getElementsByClassName('test-case');
 
-  t.expect(
-    displayedTestResult.innerText.includes('negative test case'),
-  ).toEqual(true);
+  t.expect(testCases.length).toEqual(1);
 
-  t.expect(displayedTestResult.innerText.includes('foo')).toEqual(true);
-  t.expect(displayedTestResult.innerText.includes('bar')).toEqual(true);
+  let testCase = testCases[0];
+  t.expect(testCase.innerText.includes('negative test case')).toEqual(true);
+
+  t.expect(testCase.innerText.includes('foo')).toEqual(true);
+  t.expect(testCase.innerText.includes('bar')).toEqual(true);
 
   let displayedTestSuites = document.getElementsByClassName('test-suite');
   t.expect(displayedTestSuites.length).toEqual(1);
