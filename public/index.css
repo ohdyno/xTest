@@ -12,3 +12,11 @@
   width: 540px;
   height: 540px;
 }
+
+.success {
+  color: darkgreen;
+}
+
+.failure {
+  color: darkred;
+}

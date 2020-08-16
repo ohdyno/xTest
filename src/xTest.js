@@ -23,7 +23,11 @@ let expect = (resultRecorder) => (actual) => {
         expected,
         message,
       };
-      resultRecorder.success(result);
+      if (test()) {
+        resultRecorder.success(result);
+      } else {
+        resultRecorder.failure(result);
+      }
       return result;
     },
     get not() {
@@ -40,23 +44,28 @@ let test = (name, t) => {
     testCase.status = 'success';
   };
 
-  t({ expect: expect({ success }) });
+  let failure = (r) => {
+    testCase.result = r;
+    testCase.status = 'failure';
+  };
+
+  t({ expect: expect({ success, failure }) });
 
   return { ...testCase, name };
 };
 
 const xTest = (testSuiteName, testSuiteReporter = () => {}) => {
-  let testCase;
+  let cases = [];
   return {
     test: (name, t) => {
       let result = test(name, t);
-      testCase = result;
+      cases.push(result);
       return result;
     },
     finish() {
       testSuiteReporter({
         name: testSuiteName,
-        cases: [testCase],
+        cases: cases,
       });
     },
   };

@@ -30,8 +30,12 @@ let DOMReporter = (completedSuite) => {
 xTest().test('print test result to document', (t) => {
   let testSuite = xTest('test suite name', DOMReporter);
 
-  testSuite.test('test case name', (t) => {
+  testSuite.test('success test case name', (t) => {
     t.expect('foo').not.toEqual('bar');
+  });
+
+  testSuite.test('failure test case name', (t) => {
+    t.expect('baz').toEqual('bar');
   });
 
   testSuite.finish();
@@ -46,11 +50,11 @@ xTest().test('print test result to document', (t) => {
 
   let testCases = displayedTestSuite.getElementsByClassName('test-case');
 
-  t.expect(testCases.length).toEqual(1);
+  t.expect(testCases.length).toEqual(2);
 
   let testCase = testCases[0];
   t.expect(testCase.getAttribute('class').includes('success')).toEqual(true);
-  t.expect(testCase.innerText.includes('test case name')).toEqual(true);
+  t.expect(testCase.innerText.includes('success test case name')).toEqual(true);
   t.expect(testCase.innerText.includes('foo')).toEqual(true);
   t.expect(testCase.innerText.includes('bar')).toEqual(true);
 });
