@@ -11,12 +11,12 @@ let DOMReporter = (completedSuite) => {
   cases.setAttribute('class', 'test-cases');
   let aCase = document.createElement('li');
   aCase.setAttribute('class', 'test-case');
-  aCase.innerText = completedSuite.results.name;
+  aCase.innerText = completedSuite.cases[0].name;
   let caseDetails = document.createElement('ul');
   caseDetails.setAttribute('class', 'test-case-details');
   let message = document.createElement('li');
   message.setAttribute('class', 'test-case-message');
-  message.innerText = completedSuite.results.result.message;
+  message.innerText = completedSuite.cases[0].result.message;
 
   caseDetails.appendChild(message);
   aCase.appendChild(caseDetails);
@@ -28,7 +28,7 @@ let DOMReporter = (completedSuite) => {
 xTest().test('print test result to document', (t) => {
   let testSuite = xTest('test suite name', DOMReporter);
 
-  testSuite.test('negative test case', (t) => {
+  testSuite.test('test case name', (t) => {
     t.expect('foo').not.toEqual('bar');
   });
 
@@ -39,7 +39,7 @@ xTest().test('print test result to document', (t) => {
   t.expect(testCases.length).toEqual(1);
 
   let testCase = testCases[0];
-  t.expect(testCase.innerText.includes('negative test case')).toEqual(true);
+  t.expect(testCase.innerText.includes('test case name')).toEqual(true);
 
   t.expect(testCase.innerText.includes('foo')).toEqual(true);
   t.expect(testCase.innerText.includes('bar')).toEqual(true);

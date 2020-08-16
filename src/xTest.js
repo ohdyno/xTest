@@ -50,17 +50,17 @@ let test = (name, t) => {
 };
 
 const xTest = (testSuiteName, testSuiteReporter = () => {}) => {
-  let testSuiteResult;
+  let testCase;
   return {
     test: (name, t) => {
       let result = test(name, t);
-      testSuiteResult = result;
+      testCase = result;
       return result;
     },
     finish() {
       testSuiteReporter({
         name: testSuiteName,
-        results: testSuiteResult,
+        cases: [testCase],
       });
     },
   };
