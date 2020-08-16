@@ -1,19 +1,32 @@
 import xTest from './xTest';
 
-let printToDocument = (result) => {
-  let testSuiteReport = document.createElement('p');
+let DOMReporter = (result) => {
+  let testSuiteReport = document.createElement('ul');
   testSuiteReport.setAttribute('class', 'test-suite');
-  testSuiteReport.innerText = result.name;
-  document.body.appendChild(testSuiteReport);
+  let testSuite = document.createElement('li');
+  testSuiteReport.appendChild(testSuite);
+  testSuite.innerText = result.name;
 
-  let testSuiteResult = document.createElement('p');
+  let testSuiteResults = document.createElement('ul');
+  testSuiteResults.setAttribute('class', 'test-results');
+  let testSuiteResult = document.createElement('li');
   testSuiteResult.setAttribute('class', 'test-result');
-  testSuiteResult.innerText = JSON.stringify(result);
-  document.body.appendChild(testSuiteResult);
+  testSuiteResult.innerText = result.results.name;
+  let testSuiteResultDetails = document.createElement('ul');
+  testSuiteResultDetails.setAttribute('class', 'test-result-details');
+  let message = document.createElement('li');
+  message.setAttribute('class', 'test-result-message');
+  message.innerText = result.results.result.message;
+
+  testSuiteResultDetails.appendChild(message);
+  testSuiteResult.appendChild(testSuiteResultDetails);
+  testSuiteResults.appendChild(testSuiteResult);
+  testSuite.appendChild(testSuiteResults);
+  document.body.appendChild(testSuiteReport);
 };
 
 xTest().test('print test result to document', (t) => {
-  let testSuite = xTest('test suite name', printToDocument);
+  let testSuite = xTest('test suite name', DOMReporter);
 
   testSuite.test('negative test case', (t) => {
     t.expect('foo').not.toEqual('bar');
