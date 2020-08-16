@@ -23,7 +23,7 @@ let expect = (resultRecorder) => (actual) => {
         expected,
         message,
       };
-      resultRecorder.record(result);
+      resultRecorder.success(result);
       return result;
     },
     get not() {
@@ -35,18 +35,14 @@ let expect = (resultRecorder) => (actual) => {
 
 let test = (name, t) => {
   let testCase = {};
-  testCase.record = (r) => {
+  let success = (r) => {
     testCase.result = r;
+    testCase.status = 'success';
   };
 
-  testCase.expect = expect(testCase);
+  t({ expect: expect({ success }) });
 
-  t(testCase);
-
-  return {
-    name,
-    result: testCase.result,
-  };
+  return { ...testCase, name };
 };
 
 const xTest = (testSuiteName, testSuiteReporter = () => {}) => {

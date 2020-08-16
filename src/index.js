@@ -11,7 +11,7 @@ let DOMReporter = (completedSuite) => {
   cases.setAttribute('class', 'test-cases');
   completedSuite.cases.forEach((testCase) => {
     let aCase = document.createElement('li');
-    aCase.setAttribute('class', 'test-case');
+    aCase.setAttribute('class', `test-case ${testCase.status}`);
     aCase.innerText = testCase.name;
     let caseDetails = document.createElement('ul');
     caseDetails.setAttribute('class', 'test-case-details');
@@ -36,20 +36,21 @@ xTest().test('print test result to document', (t) => {
 
   testSuite.finish();
 
-  let testCases = document.getElementsByClassName('test-case');
+  let displayedTestSuites = document.getElementsByClassName('test-suite');
+  t.expect(displayedTestSuites.length).toEqual(1);
+
+  let displayedTestSuite = displayedTestSuites[0];
+  t.expect(displayedTestSuite.innerText.includes('test suite name')).toEqual(
+    true,
+  );
+
+  let testCases = displayedTestSuite.getElementsByClassName('test-case');
 
   t.expect(testCases.length).toEqual(1);
 
   let testCase = testCases[0];
+  t.expect(testCase.getAttribute('class').includes('success')).toEqual(true);
   t.expect(testCase.innerText.includes('test case name')).toEqual(true);
-
   t.expect(testCase.innerText.includes('foo')).toEqual(true);
   t.expect(testCase.innerText.includes('bar')).toEqual(true);
-
-  let displayedTestSuites = document.getElementsByClassName('test-suite');
-  t.expect(displayedTestSuites.length).toEqual(1);
-
-  t.expect(
-    displayedTestSuites[0].innerText.includes('test suite name'),
-  ).toEqual(true);
 });
