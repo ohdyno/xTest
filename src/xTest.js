@@ -49,7 +49,7 @@ let test = (name, t) => {
   };
 };
 
-const xTest = (testSuiteReporter = () => {}) => {
+const xTest = (testSuiteName, testSuiteReporter = () => {}) => {
   let testSuiteResult;
   return {
     test: (name, t) => {
@@ -58,7 +58,10 @@ const xTest = (testSuiteReporter = () => {}) => {
       return result;
     },
     finish() {
-      testSuiteReporter(testSuiteResult);
+      testSuiteReporter({
+        name: testSuiteName,
+        results: testSuiteResult,
+      });
     },
   };
 };
