@@ -16,14 +16,23 @@ xTest().test('print test result to document', (t) => {
   let testSuite = xTest('test suite name', printToDocument);
 
   testSuite.test('negative test case', (t) => {
-    t.expect(true).not.toEqual(false);
+    t.expect('foo').not.toEqual('bar');
   });
 
-  t.expect(document.getElementsByClassName('test-result').length).toEqual(0);
+  let displayedTestResults = document.getElementsByClassName('test-result');
+  t.expect(displayedTestResults.length).toEqual(0);
 
   testSuite.finish();
 
-  t.expect(document.getElementsByClassName('test-result').length).toEqual(1);
+  t.expect(displayedTestResults.length).toEqual(1);
+  let displayedTestResult = displayedTestResults[0];
+
+  t.expect(
+    displayedTestResult.innerText.includes('negative test case'),
+  ).toEqual(true);
+
+  t.expect(displayedTestResult.innerText.includes('foo')).toEqual(true);
+  t.expect(displayedTestResult.innerText.includes('bar')).toEqual(true);
 
   let displayedTestSuites = document.getElementsByClassName('test-suite');
   t.expect(displayedTestSuites.length).toEqual(1);
