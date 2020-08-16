@@ -1,22 +1,31 @@
 import _ from 'lodash-es';
 
+function formatMessage(negated, actual, expected) {
+  if (negated) {
+    return `Expected '${JSON.stringify(actual)}' to not equal '${JSON.stringify(
+      expected,
+    )}'`;
+  } else {
+    return `Expected '${JSON.stringify(actual)}' to equal '${JSON.stringify(
+      expected,
+    )}'`;
+  }
+}
+
+function createTest(negated, actual, expected) {
+  if (negated) {
+    return () => !_.isEqual(actual, expected);
+  } else {
+    return () => _.isEqual(actual, expected);
+  }
+}
+
 let expect = (resultRecorder) => (actual) => {
   let negated = false;
   return {
     toEqual(expected) {
-      let test;
-      let message;
-      if (negated) {
-        message = `Expected '${JSON.stringify(
-          actual,
-        )}' to not equal '${JSON.stringify(expected)}'`;
-        test = () => !_.isEqual(actual, expected);
-      } else {
-        message = `Expected '${JSON.stringify(
-          actual,
-        )}' to equal '${JSON.stringify(expected)}'`;
-        test = () => _.isEqual(actual, expected);
-      }
+      let message = formatMessage(negated, actual, expected);
+      let test = createTest(negated, actual, expected);
       let result = {
         actual,
         expected,
@@ -70,7 +79,5 @@ const xTest = (testSuiteName, testSuiteReporter = () => {}) => {
     },
   };
 };
-
-xTest.test = test;
 
 export default xTest;
