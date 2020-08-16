@@ -9,18 +9,20 @@ let DOMReporter = (completedSuite) => {
 
   let cases = document.createElement('ul');
   cases.setAttribute('class', 'test-cases');
-  let aCase = document.createElement('li');
-  aCase.setAttribute('class', 'test-case');
-  aCase.innerText = completedSuite.cases[0].name;
-  let caseDetails = document.createElement('ul');
-  caseDetails.setAttribute('class', 'test-case-details');
-  let message = document.createElement('li');
-  message.setAttribute('class', 'test-case-message');
-  message.innerText = completedSuite.cases[0].result.message;
+  completedSuite.cases.forEach((testCase) => {
+    let aCase = document.createElement('li');
+    aCase.setAttribute('class', 'test-case');
+    aCase.innerText = testCase.name;
+    let caseDetails = document.createElement('ul');
+    caseDetails.setAttribute('class', 'test-case-details');
+    let message = document.createElement('li');
+    message.setAttribute('class', 'test-case-message');
+    message.innerText = testCase.result.message;
+    caseDetails.appendChild(message);
+    aCase.appendChild(caseDetails);
+    cases.appendChild(aCase);
+  });
 
-  caseDetails.appendChild(message);
-  aCase.appendChild(caseDetails);
-  cases.appendChild(aCase);
   suite.appendChild(cases);
   document.body.appendChild(report);
 };
