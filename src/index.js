@@ -12,14 +12,7 @@ let DOMReporter = (completedSuite) => {
   completedSuite.cases.forEach((testCase) => {
     let aCase = document.createElement('li');
     aCase.setAttribute('class', `test-case ${testCase.status}`);
-    aCase.innerText = testCase.name;
-    let caseDetails = document.createElement('ul');
-    caseDetails.setAttribute('class', 'test-case-details');
-    let message = document.createElement('li');
-    message.setAttribute('class', 'test-case-message');
-    message.innerText = testCase.result.message;
-    caseDetails.appendChild(message);
-    aCase.appendChild(caseDetails);
+    aCase.innerText = `${testCase.status}: ${testCase.name}. ${testCase.message}`;
     cases.appendChild(aCase);
   });
 

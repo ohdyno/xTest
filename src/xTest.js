@@ -13,11 +13,10 @@ function formatMessage(negated, actual, expected) {
 }
 
 function createTest(negated, actual, expected) {
-  if (negated) {
-    return () => !_.isEqual(actual, expected);
-  } else {
-    return () => _.isEqual(actual, expected);
-  }
+  return () => {
+    const isEqual = _.isEqual(actual, expected);
+    return negated ? !isEqual : isEqual;
+  };
 }
 
 let expect = (resultRecorder) => (actual) => {
@@ -26,17 +25,11 @@ let expect = (resultRecorder) => (actual) => {
     toEqual(expected) {
       let message = formatMessage(negated, actual, expected);
       let test = createTest(negated, actual, expected);
-      let result = {
-        actual,
-        expected,
-        message,
-      };
       if (test()) {
-        resultRecorder.success(result);
+        resultRecorder.success(message);
       } else {
-        resultRecorder.failure(result);
+        resultRecorder.failure(message);
       }
-      return result;
     },
     get not() {
       negated = true;
@@ -47,15 +40,15 @@ let expect = (resultRecorder) => (actual) => {
 
 let test = (name, t) => {
   let testCase = {};
-  let success = (r) => {
-    testCase.result = r;
+  let success = (message) => {
+    testCase.message = message;
     testCase.status = 'success';
   };
 
-  let failure = (r) => {
-    testCase.result = r;
+  let failure = (message) => {
+    testCase.message = message;
     testCase.status = 'failure';
-    console.assert(false, r.message);
+    console.assert(false, message);
   };
 
   t({ expect: expect({ success, failure }) });
@@ -67,9 +60,7 @@ const xTest = (testSuiteName, testSuiteReporter = () => {}) => {
   let cases = [];
   return {
     test: (name, t) => {
-      let result = test(name, t);
-      cases.push(result);
-      return result;
+      cases.push(test(name, t));
     },
     finish() {
       testSuiteReporter({
