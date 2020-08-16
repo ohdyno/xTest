@@ -56,17 +56,14 @@ let test = (name, t) => {
   return { ...testCase, name };
 };
 
-const xTest = (testSuiteName, testSuiteReporter = () => {}) => {
+const xTest = (name, testSuiteReporter = () => {}) => {
   let cases = [];
   return {
     test: (name, t) => {
       cases.push(test(name, t));
     },
     finish() {
-      testSuiteReporter({
-        name: testSuiteName,
-        cases: cases,
-      });
+      testSuiteReporter({ name, cases });
     },
   };
 };
