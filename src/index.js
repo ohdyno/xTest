@@ -1,6 +1,6 @@
 import xTest from './xTest';
 
-let DOMReporter = (completedSuite) => {
+let DOMReporter = (root = document.body) => (completedSuite) => {
   let report = document.createElement('ul');
   report.setAttribute('class', 'test-suite');
   let suite = document.createElement('li');
@@ -17,11 +17,13 @@ let DOMReporter = (completedSuite) => {
   });
 
   suite.appendChild(cases);
-  document.body.appendChild(report);
+  root.appendChild(report);
 };
 
 xTest().test('print test result to document', (t) => {
-  let testSuite = xTest('test suite name', DOMReporter);
+  let container = document.createElement('section');
+  document.body.appendChild(container);
+  let testSuite = xTest('test suite name', DOMReporter(container));
 
   testSuite.test('success test case name', (t) => {
     t.expect('foo').not.toEqual('bar');
@@ -33,7 +35,7 @@ xTest().test('print test result to document', (t) => {
 
   testSuite.finish();
 
-  let displayedTestSuites = document.getElementsByClassName('test-suite');
+  let displayedTestSuites = container.getElementsByClassName('test-suite');
   t.expect(displayedTestSuites.length).toEqual(1);
 
   let displayedTestSuite = displayedTestSuites[0];
