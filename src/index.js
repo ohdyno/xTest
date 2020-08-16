@@ -14,7 +14,7 @@ let deleteAll = () => {
   }
 };
 
-xTest(printToDocument).test('positive test case', (t) => {
+xTest().test('positive test case', (t) => {
   let testCase = xTest().test('positive test case', (t) => {
     t.expect(true).toEqual(true);
   });
@@ -27,9 +27,7 @@ xTest(printToDocument).test('positive test case', (t) => {
   });
 });
 
-deleteAll();
-
-xTest(printToDocument).test('negative test case', (t) => {
+xTest().test('negative test case', (t) => {
   let testCase = xTest().test('negative test case', (t) => {
     t.expect(true).not.toEqual(false);
   });
@@ -45,11 +43,16 @@ xTest(printToDocument).test('negative test case', (t) => {
 deleteAll();
 
 xTest().test('print test result to document', (t) => {
-  xTest(printToDocument).test('negative test case', (t) => {
+  let testSuite = xTest(printToDocument);
+  testSuite.test('negative test case', (t) => {
     t.expect(true).not.toEqual(false);
   });
 
-  t.expect(document.getElementsByClassName('test-result').length).toEqual(1);
-});
+  t.expect(document.getElementsByClassName('test-result').length).toEqual(0);
 
-deleteAll();
+  testSuite.finish();
+
+  t.expect(document.getElementsByClassName('test-result').length).toEqual(1);
+
+  deleteAll();
+});
