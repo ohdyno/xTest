@@ -17,7 +17,6 @@ let expect = (resultRecorder) => (actual) => {
         )}' to equal '${JSON.stringify(expected)}'`;
         test = () => _.isEqual(actual, expected);
       }
-      console.assert(test(), message);
       let result = {
         actual,
         expected,
@@ -47,6 +46,7 @@ let test = (name, t) => {
   let failure = (r) => {
     testCase.result = r;
     testCase.status = 'failure';
+    console.assert(false, r.message);
   };
 
   t({ expect: expect({ success, failure }) });
