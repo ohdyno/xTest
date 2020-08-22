@@ -25,3 +25,7 @@ class Expect {
 export function expect(actual, resultHandler) {
   return new Expect(actual, resultHandler);
 }
+
+export function test(name, body, resultHandler) {
+  resultHandler.success();
+}
