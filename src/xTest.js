@@ -1,25 +1,23 @@
-function assert(actual, expected) {
-  if (actual !== expected) {
-    throw new Error(
-      `Assertion failed: Expected ${actual} to equal ${expected}`,
-    );
-  }
+class ExpectRecorderDummy {
+  success() {}
 }
 
 class Expect {
-  constructor(recorder, actual) {
+  constructor(actual, recorder = new ExpectRecorderDummy()) {
     this.recorder = recorder;
     this.actual = actual;
   }
 
   toBe(expected) {
-    try {
-      assert(this.actual, expected);
-      this.recorder.success();
-    } catch (e) {}
+    if (this.actual !== expected) {
+      throw new Error(
+        `Assertion failed: Expected ${this.actual} to equal ${expected}`,
+      );
+    }
+    this.recorder.success();
   }
 }
 
 export function expect(actual, recorder) {
-  return new Expect(recorder, actual);
+  return new Expect(actual, recorder);
 }
