@@ -1,11 +1,19 @@
-export class ExpectationResultHandlerSpy {
-  success(message) {
-    this.successIsCalled = true;
-    this.successIsCalledWithMessage = message;
-  }
+export const ExpectationResultHandlerSpy = {
+  createForSuccessCase() {
+    return {
+      success(message) {
+        this.successIsCalled = true;
+        this.successIsCalledWithMessage = message;
+      },
+    };
+  },
 
-  fail(message) {
-    this.failIsCalled = true;
-    this.failIsCalledWithMessage = message;
-  }
-}
+  createForFailureCase() {
+    return {
+      fail(message) {
+        this.failIsCalled = true;
+        this.failIsCalledWithMessage = message;
+      },
+    };
+  },
+};

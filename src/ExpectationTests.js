@@ -2,7 +2,7 @@ import { expect } from './xTest';
 import { ExpectationResultHandlerSpy } from './TestDoubles';
 
 function successCase() {
-  const resultHandlerSpy = new ExpectationResultHandlerSpy();
+  const resultHandlerSpy = ExpectationResultHandlerSpy.createForSuccessCase();
 
   expect(true, resultHandlerSpy).toBe(true);
   expect(resultHandlerSpy.successIsCalled).toBe(true);
@@ -12,7 +12,7 @@ function successCase() {
 }
 
 function failCase() {
-  const resultHandlerSpy = new ExpectationResultHandlerSpy();
+  const resultHandlerSpy = ExpectationResultHandlerSpy.createForFailureCase();
 
   try {
     expect(true, resultHandlerSpy).toBe(false);
