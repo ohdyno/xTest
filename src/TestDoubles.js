@@ -1,5 +1,6 @@
 export class ExpectationRecorderSpy {
-  success() {
+  success(message) {
     this.successIsCalled = true;
+    this.successIsCalledWithMessage = message;
   }
 }

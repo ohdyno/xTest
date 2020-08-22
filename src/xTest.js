@@ -14,7 +14,7 @@ class Expect {
         `Assertion failed: Expected ${this.actual} to equal ${expected}`,
       );
     }
-    this.recorder.success();
+    this.recorder.success(`Expected ${this.actual} to be ${expected}`);
   }
 }
 
