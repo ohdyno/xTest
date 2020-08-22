@@ -14,15 +14,11 @@ function successCase() {
 function failCase() {
   const resultHandlerSpy = ExpectationResultHandlerSpy.createForFailureCase();
 
-  try {
-    expect(true, resultHandlerSpy).toBe(false);
-  } catch (e) {
-  } finally {
-    expect(resultHandlerSpy.failIsCalled).toBe(true);
-    expect(resultHandlerSpy.failIsCalledWithMessage).toBe(
-      'Expected true to be false',
-    );
-  }
+  expect(true, resultHandlerSpy).toBe(false);
+  expect(resultHandlerSpy.failIsCalled).toBe(true);
+  expect(resultHandlerSpy.failIsCalledWithMessage).toBe(
+    'Expected true to be false',
+  );
 }
 
 export default () => {

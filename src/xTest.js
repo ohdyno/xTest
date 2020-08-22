@@ -1,11 +1,13 @@
-class ExpectResultHandlerDummy {
+class ErrorThrowingExpectResultHandler {
   success() {}
 
-  fail() {}
+  fail(message) {
+    throw new Error(`Assertion Failed: ${message}`);
+  }
 }
 
 class Expect {
-  constructor(actual, resultHandler = new ExpectResultHandlerDummy()) {
+  constructor(actual, resultHandler = new ErrorThrowingExpectResultHandler()) {
     this.resultHandler = resultHandler;
     this.actual = actual;
   }
@@ -14,7 +16,7 @@ class Expect {
     if (this.actual !== expected) {
       const message = `Expected ${this.actual} to be ${expected}`;
       this.resultHandler.fail(message);
-      throw new Error(`Assertion failed: ${message}`);
+      return;
     }
     this.resultHandler.success(`Expected ${this.actual} to be ${expected}`);
   }
