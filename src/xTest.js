@@ -7,15 +7,19 @@ function assert(actual, expected) {
 }
 
 class Expect {
-  constructor(actual) {
+  constructor(recorder, actual) {
+    this.recorder = recorder;
     this.actual = actual;
   }
 
   toBe(expected) {
-    assert(this.actual, expected);
+    try {
+      assert(this.actual, expected);
+      this.recorder.success();
+    } catch (e) {}
   }
 }
 
-export function expect(actual) {
-  return new Expect(actual);
+export function expect(actual, recorder) {
+  return new Expect(recorder, actual);
 }
