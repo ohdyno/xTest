@@ -1,5 +1,7 @@
 class ExpectRecorderDummy {
   success() {}
+
+  fail() {}
 }
 
 class Expect {
@@ -10,9 +12,9 @@ class Expect {
 
   toBe(expected) {
     if (this.actual !== expected) {
-      throw new Error(
-        `Assertion failed: Expected ${this.actual} to equal ${expected}`,
-      );
+      const message = `Expected ${this.actual} to be ${expected}`;
+      this.recorder.fail(message);
+      throw new Error(`Assertion failed: ${message}`);
     }
     this.recorder.success(`Expected ${this.actual} to be ${expected}`);
   }

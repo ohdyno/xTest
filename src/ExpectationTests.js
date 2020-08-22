@@ -11,6 +11,21 @@ function successCase() {
   );
 }
 
+function failCase() {
+  const recorderSpy = new ExpectationRecorderSpy();
+
+  try {
+    expect(true, recorderSpy).toBe(false);
+  } catch (e) {
+  } finally {
+    expect(recorderSpy.failIsCalled).toBe(true);
+    expect(recorderSpy.failIsCalledWithMessage).toBe(
+      'Expected true to be false',
+    );
+  }
+}
+
 export default () => {
   successCase();
+  failCase();
 };
