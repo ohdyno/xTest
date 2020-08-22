@@ -1,4 +1,4 @@
-export class ExpectationRecorderSpy {
+export class ExpectationResultHandlerSpy {
   success(message) {
     this.successIsCalled = true;
     this.successIsCalledWithMessage = message;

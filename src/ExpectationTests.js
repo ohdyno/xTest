@@ -1,25 +1,25 @@
 import { expect } from './xTest';
-import { ExpectationRecorderSpy } from './TestDoubles';
+import { ExpectationResultHandlerSpy } from './TestDoubles';
 
 function successCase() {
-  const recorderSpy = new ExpectationRecorderSpy();
+  const resultHandlerSpy = new ExpectationResultHandlerSpy();
 
-  expect(true, recorderSpy).toBe(true);
-  expect(recorderSpy.successIsCalled).toBe(true);
-  expect(recorderSpy.successIsCalledWithMessage).toBe(
+  expect(true, resultHandlerSpy).toBe(true);
+  expect(resultHandlerSpy.successIsCalled).toBe(true);
+  expect(resultHandlerSpy.successIsCalledWithMessage).toBe(
     'Expected true to be true',
   );
 }
 
 function failCase() {
-  const recorderSpy = new ExpectationRecorderSpy();
+  const resultHandlerSpy = new ExpectationResultHandlerSpy();
 
   try {
-    expect(true, recorderSpy).toBe(false);
+    expect(true, resultHandlerSpy).toBe(false);
   } catch (e) {
   } finally {
-    expect(recorderSpy.failIsCalled).toBe(true);
-    expect(recorderSpy.failIsCalledWithMessage).toBe(
+    expect(resultHandlerSpy.failIsCalled).toBe(true);
+    expect(resultHandlerSpy.failIsCalledWithMessage).toBe(
       'Expected true to be false',
     );
   }
