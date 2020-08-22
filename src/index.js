@@ -1,8 +1,3 @@
-import { expect } from './xTest';
-import { ExpectationRecorderSpy } from './TestDoubles';
+import ExpectationTests from './ExpectationTests';
 
-const recorderSpy = new ExpectationRecorderSpy();
-
-expect(true, recorderSpy).toBe(true);
-expect(recorderSpy.successIsCalled).toBe(true);
-expect(recorderSpy.successIsCalledWithMessage).toBe('Expected true to be true');
+ExpectationTests();
