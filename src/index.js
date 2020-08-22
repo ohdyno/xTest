@@ -1,12 +1,7 @@
 import { expect } from './xTest';
+import { ExpectationRecorderSpy } from './TestDoubles';
 
-class RecorderSpy {
-  success() {
-    this.successIsCalled = true;
-  }
-}
-
-const recorderSpy = new RecorderSpy();
+const recorderSpy = new ExpectationRecorderSpy();
 
 expect(true, recorderSpy).toBe(true);
 expect(recorderSpy.successIsCalled).toBe(true);
