@@ -40,28 +40,27 @@ class TestCaseResultHandler {
 
 export function test(name, body, resultHandler = new TestCaseResultHandler()) {
   const result = {
+    name,
+    successes: [],
     failures: [],
+  };
+
+  const resultRecorder = {
     success() {},
     fail(message) {
-      this.failures.push(message);
+      result.failures.push(message);
     },
   };
 
   function e(actual) {
-    return expect(actual, result);
+    return expect(actual, resultRecorder);
   }
 
   body({ expect: e });
 
   if (_.isEmpty(result.failures)) {
-    resultHandler.success({
-      name,
-      successes: [],
-    });
+    resultHandler.success(result);
   } else {
-    resultHandler.fail({
-      name,
-      failures: result.failures,
-    });
+    resultHandler.fail(result);
   }
 }
