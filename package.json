@@ -2,7 +2,6 @@
   "scripts": {
     "start": "snowpack dev",
     "build": "snowpack build",
-    "test": "npm run start # tests should be running live in the browser",
     "format": "prettier --write \"src/**/*.js\"",
     "lint": "prettier --check \"src/**/*.js\""
   },
@@ -10,5 +9,5 @@
     "lodash-es": "^4.17.15",
     "prettier": "^2.0.5",
     "snowpack": "^2.7.7"
-  }
+  },
 }
