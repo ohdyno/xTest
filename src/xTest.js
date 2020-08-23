@@ -15,9 +15,10 @@ class Expect {
   }
 
   toBe(expected) {
-    const message = `Expected ${JSON.stringify(
-      this.actual,
-    )} to be ${JSON.stringify(expected)}`;
+    const message = `Expected
+${JSON.stringify(this.actual)}
+to be
+${JSON.stringify(expected)}`;
     if (_.isEqual(this.actual, expected)) {
       this.resultHandler.success(message);
     } else {
@@ -34,7 +35,8 @@ class TestCaseResultHandler {
   success() {}
 
   fail(result) {
-    throw new Error(JSON.stringify(result));
+    throw new Error(`Test case: ${result.name}
+Failures: ${_.toString(result.failures)}`);
   }
 }
 
@@ -49,7 +51,7 @@ class TestCase {
     };
   }
 
-  run(resultHandler) {
+  run(resultHandler = new TestCaseResultHandler()) {
     const result = this.result;
     const resultRecorder = {
       success() {},
@@ -75,6 +77,6 @@ class TestCase {
     }
   }
 }
-export function test(name, body, resultHandler = new TestCaseResultHandler()) {
+export function test(name, body, resultHandler) {
   new TestCase(name, body).run(resultHandler);
 }
