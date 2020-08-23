@@ -38,33 +38,43 @@ class TestCaseResultHandler {
   }
 }
 
+class TestCase {
+  constructor(name, body) {
+    this.name = name;
+    this.body = body;
+    this.result = {
+      name,
+      successes: [],
+      failures: [],
+    };
+  }
+
+  run(resultHandler) {
+    const result = this.result;
+    const resultRecorder = {
+      success() {},
+      fail(message) {
+        result.failures.push(message);
+      },
+    };
+
+    function e(actual) {
+      return expect(actual, resultRecorder);
+    }
+
+    this.body({ expect: e });
+
+    function testCaseSucceeded(result) {
+      return _.isEmpty(result.failures);
+    }
+
+    if (testCaseSucceeded(result)) {
+      resultHandler.success(result);
+    } else {
+      resultHandler.fail(result);
+    }
+  }
+}
 export function test(name, body, resultHandler = new TestCaseResultHandler()) {
-  const result = {
-    name,
-    successes: [],
-    failures: [],
-  };
-
-  const resultRecorder = {
-    success() {},
-    fail(message) {
-      result.failures.push(message);
-    },
-  };
-
-  function e(actual) {
-    return expect(actual, resultRecorder);
-  }
-
-  body({ expect: e });
-
-  function testCaseSucceeded(result) {
-    return _.isEmpty(result.failures);
-  }
-
-  if (testCaseSucceeded(result)) {
-    resultHandler.success(result);
-  } else {
-    resultHandler.fail(result);
-  }
+  new TestCase(name, body).run(resultHandler);
 }
