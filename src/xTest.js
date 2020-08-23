@@ -29,5 +29,26 @@ export function expect(actual, resultHandler) {
 }
 
 export function test(name, body, resultHandler) {
-  resultHandler.success({ name });
+  const result = {
+    success() {},
+    fail(message) {
+      this.failures = [message];
+    },
+  };
+
+  function e(actual) {
+    return expect(actual, result);
+  }
+
+  body({ expect: e });
+
+  if (result.failures) {
+    resultHandler.fail({
+      name,
+    });
+  } else {
+    resultHandler.success({
+      name,
+    });
+  }
 }
