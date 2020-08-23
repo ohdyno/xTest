@@ -1,3 +1,5 @@
+import _ from 'lodash-es';
+
 class ErrorThrowingExpectResultHandler {
   success() {}
 
@@ -13,12 +15,12 @@ class Expect {
   }
 
   toBe(expected) {
-    if (this.actual !== expected) {
+    if (_.isEqual(this.actual, expected)) {
+      this.resultHandler.success(`Expected ${this.actual} to be ${expected}`);
+    } else {
       const message = `Expected ${this.actual} to be ${expected}`;
       this.resultHandler.fail(message);
-      return;
     }
-    this.resultHandler.success(`Expected ${this.actual} to be ${expected}`);
   }
 }
 
@@ -27,5 +29,5 @@ export function expect(actual, resultHandler) {
 }
 
 export function test(name, body, resultHandler) {
-  resultHandler.success();
+  resultHandler.success({ name });
 }
