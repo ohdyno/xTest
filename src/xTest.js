@@ -58,7 +58,11 @@ export function test(name, body, resultHandler = new TestCaseResultHandler()) {
 
   body({ expect: e });
 
-  if (_.isEmpty(result.failures)) {
+  function testCaseSucceeded(result) {
+    return _.isEmpty(result.failures);
+  }
+
+  if (testCaseSucceeded(result)) {
     resultHandler.success(result);
   } else {
     resultHandler.fail(result);
