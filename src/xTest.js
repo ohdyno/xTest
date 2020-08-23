@@ -28,7 +28,11 @@ export function expect(actual, resultHandler) {
   return new Expect(actual, resultHandler);
 }
 
-export function test(name, body, resultHandler) {
+class TestCaseResultHandler {
+  success() {}
+}
+
+export function test(name, body, resultHandler = new TestCaseResultHandler()) {
   const result = {
     success() {},
     fail(message) {
