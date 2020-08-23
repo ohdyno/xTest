@@ -53,14 +53,15 @@ export function test(name, body, resultHandler = new TestCaseResultHandler()) {
 
   body({ expect: e });
 
-  if (!_.isEmpty(result.failures)) {
+  if (_.isEmpty(result.failures)) {
+    resultHandler.success({
+      name,
+      successes: [],
+    });
+  } else {
     resultHandler.fail({
       name,
       failures: result.failures,
-    });
-  } else {
-    resultHandler.success({
-      name,
     });
   }
 }

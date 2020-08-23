@@ -13,6 +13,7 @@ export default () => {
     expect(testCaseResultHandlerSpy.successIsCalled).toBe(true);
     expect(testCaseResultHandlerSpy.successIsCalledWithResult).toBe({
       name: 'a test case',
+      successes: [],
     });
   });
 
