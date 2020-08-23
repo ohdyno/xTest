@@ -34,6 +34,7 @@ export default () => {
     expect(testCaseResultHandlerSpy.failureIsCalled).toBe(true);
     expect(testCaseResultHandlerSpy.failureIsCalledWithResult).toBe({
       name: 'a test case',
+      failures: ['Expected true to be false'],
     });
   });
 };
