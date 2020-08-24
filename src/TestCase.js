@@ -32,11 +32,7 @@ export class TestCase {
       },
     };
 
-    function e(actual) {
-      return expect(actual, resultRecorder);
-    }
-
-    this.body({ expect: e });
+    this.body({ expect: (actual) => expect(actual, resultRecorder) });
 
     function testCaseSucceeded(result) {
       return _.isEmpty(result.failures);
