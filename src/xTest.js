@@ -54,7 +54,9 @@ class TestCase {
   run(resultHandler = new TestCaseResultHandler()) {
     const result = this.result;
     const resultRecorder = {
-      success() {},
+      success(message) {
+        result.successes.push(message);
+      },
       fail(message) {
         result.failures.push(message);
       },
