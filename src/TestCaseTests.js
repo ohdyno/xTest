@@ -91,4 +91,26 @@ export default () => {
       ],
     });
   });
+
+  test('a test case with a success and a fail expect reports both expects to result handler', ({
+    expect,
+  }) => {
+    const testCaseResultHandlerSpy = {
+      result(result) {
+        this.result = result;
+      },
+    };
+
+    test(
+      'a test case',
+      ({ expect }) => {
+        expect(true).toBe(false);
+        expect(true).toBe(true);
+      },
+      testCaseResultHandlerSpy,
+    );
+
+    expect(testCaseResultHandlerSpy.result.failures.length).toBe(1);
+    expect(testCaseResultHandlerSpy.result.successes.length).toBe(1);
+  });
 };
