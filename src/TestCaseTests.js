@@ -3,15 +3,13 @@ import { test } from './xTest';
 export default () => {
   test('testing an empty test case', ({ expect }) => {
     const testCaseResultHandlerSpy = {
-      success(result) {
-        this.successIsCalled = true;
-        this.successIsCalledWithResult = result;
+      result(result) {
+        this.result = result;
       },
     };
 
     test('a test case', () => {}, testCaseResultHandlerSpy);
-    expect(testCaseResultHandlerSpy.successIsCalled).toBe(true);
-    expect(testCaseResultHandlerSpy.successIsCalledWithResult).toBe({
+    expect(testCaseResultHandlerSpy.result).toBe({
       name: 'a test case',
       successes: [],
       failures: [],
@@ -20,9 +18,8 @@ export default () => {
 
   test('testing a success test case', ({ expect }) => {
     const testCaseResultHandlerSpy = {
-      success(result) {
-        this.successIsCalled = true;
-        this.successIsCalledWithResult = result;
+      result(result) {
+        this.result = result;
       },
     };
 
@@ -34,8 +31,7 @@ export default () => {
       testCaseResultHandlerSpy,
     );
 
-    expect(testCaseResultHandlerSpy.successIsCalled).toBe(true);
-    expect(testCaseResultHandlerSpy.successIsCalledWithResult).toBe({
+    expect(testCaseResultHandlerSpy.result).toBe({
       name: 'a test case',
       successes: ['Expected\ntrue\nto be\ntrue'],
       failures: [],
@@ -44,9 +40,8 @@ export default () => {
 
   test('testing a failure test case', ({ expect }) => {
     const testCaseResultHandlerSpy = {
-      fail(result) {
-        this.failureIsCalled = true;
-        this.failureIsCalledWithResult = result;
+      result(result) {
+        this.result = result;
       },
     };
 
@@ -57,8 +52,8 @@ export default () => {
       },
       testCaseResultHandlerSpy,
     );
-    expect(testCaseResultHandlerSpy.failureIsCalled).toBe(true);
-    expect(testCaseResultHandlerSpy.failureIsCalledWithResult).toBe({
+
+    expect(testCaseResultHandlerSpy.result).toBe({
       name: 'a test case',
       successes: [],
       failures: ['Expected\ntrue\nto be\nfalse'],
