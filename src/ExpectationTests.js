@@ -1,9 +1,12 @@
 import { expect as act, test } from './xTest';
-import { ExpectationResultHandlerSpy } from './TestDoubles';
 
 export default () => {
   test('a successful expect', ({ expect }) => {
-    const resultHandlerSpy = ExpectationResultHandlerSpy.createForSuccessCase();
+    const resultHandlerSpy = {
+      success(expectation) {
+        this.successIsCalledWith = expectation;
+      },
+    };
 
     act(true, resultHandlerSpy).toBe(true);
 
@@ -14,7 +17,11 @@ export default () => {
   });
 
   test('a failure expect', ({ expect }) => {
-    const resultHandlerSpy = ExpectationResultHandlerSpy.createForFailureCase();
+    const resultHandlerSpy = {
+      fail(expectation) {
+        this.failIsCalledWith = expectation;
+      },
+    };
 
     act(true, resultHandlerSpy).toBe(false);
 

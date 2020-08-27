@@ -1,4 +1,3 @@
-import _ from 'lodash-es';
 import { expect } from './xTest';
 
 class TestCaseResultHandler {
