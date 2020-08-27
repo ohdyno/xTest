@@ -14,7 +14,7 @@ export default () => {
       error = e;
     }
 
-    expect(error !== undefined).toBe(true);
+    expect(error).toBeDefined();
   });
 
   test('an empty test case reports no successes or failures to result handler', ({
