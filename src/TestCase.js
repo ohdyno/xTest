@@ -7,7 +7,11 @@ class TestCaseResultHandler {
       throw new Error(`Test Case Failed:
 Name: ${result.name}
 Failures:
-${_.toString(result.failures)}`);
+${JSON.stringify(
+  result.failures,
+  (key, value) => (typeof value === 'undefined' ? null : value),
+  4,
+)}`);
     }
   }
 }
