@@ -5,7 +5,7 @@ class ErrorThrowingExpectResultHandler {
 
   fail(expectation) {
     throw new Error(`Expectation Failed:
-${JSON.stringify(expectation)}`);
+${JSON.stringify(expectation, null, 4)}`);
   }
 }
 
