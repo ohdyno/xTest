@@ -1,7 +1,15 @@
+import _ from 'lodash-es';
 import { expect } from './xTest';
 
 class TestCaseResultHandler {
-  result(result) {}
+  result(result) {
+    if (result.failures.length > 0) {
+      throw new Error(`Test Case Failed:
+Name: ${result.name}
+Failures:
+${_.toString(result.failures)}`);
+    }
+  }
 }
 
 export class TestCase {
