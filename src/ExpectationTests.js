@@ -6,9 +6,10 @@ function successCase() {
 
   expect(true, resultHandlerSpy).toBe(true);
   expect(resultHandlerSpy.successIsCalled).toBe(true);
-  expect(resultHandlerSpy.successIsCalledWithMessage).toBe(
-    'Expected\ntrue\nto be\ntrue',
-  );
+  expect(resultHandlerSpy.successIsCalledWithMessage).toBe({
+    expected: true,
+    actual: true,
+  });
 }
 
 function failCase() {
@@ -16,9 +17,10 @@ function failCase() {
 
   expect(true, resultHandlerSpy).toBe(false);
   expect(resultHandlerSpy.failIsCalled).toBe(true);
-  expect(resultHandlerSpy.failIsCalledWithMessage).toBe(
-    'Expected\ntrue\nto be\nfalse',
-  );
+  expect(resultHandlerSpy.failIsCalledWithMessage).toBe({
+    expected: false,
+    actual: true,
+  });
 }
 
 export default () => {

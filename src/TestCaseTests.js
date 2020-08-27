@@ -49,7 +49,12 @@ export default () => {
 
     expect(testCaseResultHandlerSpy.result).toBe({
       name: 'a test case',
-      successes: ['Expected\ntrue\nto be\ntrue'],
+      successes: [
+        {
+          expected: true,
+          actual: true,
+        },
+      ],
       failures: [],
     });
   });
@@ -72,7 +77,12 @@ export default () => {
     expect(testCaseResultHandlerSpy.result).toBe({
       name: 'a test case',
       successes: [],
-      failures: ['Expected\ntrue\nto be\nfalse'],
+      failures: [
+        {
+          expected: false,
+          actual: true,
+        },
+      ],
     });
   });
 };

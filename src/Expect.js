@@ -4,7 +4,7 @@ class ErrorThrowingExpectResultHandler {
   success() {}
 
   fail(message) {
-    throw new Error(`Assertion Failed: ${message}`);
+    throw new Error(`Assertion Failed: ${JSON.stringify(message)}`);
   }
 }
 
@@ -15,10 +15,10 @@ export class Expect {
   }
 
   toBe(expected) {
-    const message = `Expected
-${JSON.stringify(this.actual)}
-to be
-${JSON.stringify(expected)}`;
+    const message = {
+      expected,
+      actual: this.actual,
+    };
     if (_.isEqual(this.actual, expected)) {
       this.resultHandler.success(message);
     } else {
