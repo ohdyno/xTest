@@ -4,13 +4,13 @@ export default () => {
   test('a successful expect.toBe', ({ expect }) => {
     const resultHandlerSpy = {
       success(expectation) {
-        this.successIsCalledWith = expectation;
+        this.isCalledWith = expectation;
       },
     };
 
     act(true, resultHandlerSpy).toBe(true);
 
-    expect(resultHandlerSpy.successIsCalledWith).toBe({
+    expect(resultHandlerSpy.isCalledWith).toBe({
       expected: true,
       actual: true,
     });
@@ -19,13 +19,13 @@ export default () => {
   test('a failure expect.toBe', ({ expect }) => {
     const resultHandlerSpy = {
       fail(expectation) {
-        this.failIsCalledWith = expectation;
+        this.isCalledWith = expectation;
       },
     };
 
     act(true, resultHandlerSpy).toBe(false);
 
-    expect(resultHandlerSpy.failIsCalledWith).toBe({
+    expect(resultHandlerSpy.isCalledWith).toBe({
       expected: false,
       actual: true,
     });
@@ -34,13 +34,13 @@ export default () => {
   test('a failure expect.toBeDefined', ({ expect }) => {
     const resultHandlerSpy = {
       fail(expectation) {
-        this.failIsCalledWith = expectation;
+        this.isCalledWith = expectation;
       },
     };
 
     act(undefined, resultHandlerSpy).toBeDefined();
 
-    expect(resultHandlerSpy.failIsCalledWith).toBe({
+    expect(resultHandlerSpy.isCalledWith).toBe({
       expected: 'to be defined',
       actual: undefined,
     });
@@ -49,13 +49,13 @@ export default () => {
   test('a successful expect.toBeDefined', ({ expect }) => {
     const resultHandlerSpy = {
       success(expectation) {
-        this.successIsCalledWith = expectation;
+        this.isCalledWith = expectation;
       },
     };
 
     act(true, resultHandlerSpy).toBeDefined();
 
-    expect(resultHandlerSpy.successIsCalledWith).toBe({
+    expect(resultHandlerSpy.isCalledWith).toBe({
       expected: 'to be defined',
       actual: true,
     });
