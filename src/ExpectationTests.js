@@ -5,8 +5,7 @@ function successCase() {
   const resultHandlerSpy = ExpectationResultHandlerSpy.createForSuccessCase();
 
   expect(true, resultHandlerSpy).toBe(true);
-  expect(resultHandlerSpy.successIsCalled).toBe(true);
-  expect(resultHandlerSpy.successIsCalledWithMessage).toBe({
+  expect(resultHandlerSpy.successIsCalledWith).toBe({
     expected: true,
     actual: true,
   });
@@ -16,8 +15,7 @@ function failCase() {
   const resultHandlerSpy = ExpectationResultHandlerSpy.createForFailureCase();
 
   expect(true, resultHandlerSpy).toBe(false);
-  expect(resultHandlerSpy.failIsCalled).toBe(true);
-  expect(resultHandlerSpy.failIsCalledWithMessage).toBe({
+  expect(resultHandlerSpy.failIsCalledWith).toBe({
     expected: false,
     actual: true,
   });

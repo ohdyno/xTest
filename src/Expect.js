@@ -3,8 +3,9 @@ import _ from 'lodash-es';
 class ErrorThrowingExpectResultHandler {
   success() {}
 
-  fail(message) {
-    throw new Error(`Assertion Failed: ${JSON.stringify(message)}`);
+  fail(expectation) {
+    throw new Error(`Expectation Failed:
+${JSON.stringify(expectation)}`);
   }
 }
 
@@ -15,14 +16,14 @@ export class Expect {
   }
 
   toBe(expected) {
-    const message = {
+    const expectation = {
       expected,
       actual: this.actual,
     };
     if (_.isEqual(this.actual, expected)) {
-      this.resultHandler.success(message);
+      this.resultHandler.success(expectation);
     } else {
-      this.resultHandler.fail(message);
+      this.resultHandler.fail(expectation);
     }
   }
 }
