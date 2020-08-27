@@ -17,7 +17,9 @@ export default () => {
     expect(error !== undefined).toBe(true);
   });
 
-  test('testing an empty test case', ({ expect }) => {
+  test('an empty test case reports no successes or failures to result handler', ({
+    expect,
+  }) => {
     const testCaseResultHandlerSpy = {
       result(result) {
         this.result = result;
@@ -32,7 +34,9 @@ export default () => {
     });
   });
 
-  test('testing a success test case', ({ expect }) => {
+  test('a success test case with one expect reports one success to result handler', ({
+    expect,
+  }) => {
     const testCaseResultHandlerSpy = {
       result(result) {
         this.result = result;
@@ -59,7 +63,9 @@ export default () => {
     });
   });
 
-  test('testing a failure test case', ({ expect }) => {
+  test('a failure test case with one expect reports to result handler one failure', ({
+    expect,
+  }) => {
     const testCaseResultHandlerSpy = {
       result(result) {
         this.result = result;
