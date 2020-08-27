@@ -26,4 +26,16 @@ export class Expect {
       this.resultHandler.fail(expectation);
     }
   }
+
+  toBeDefined() {
+    const expectation = {
+      expected: 'to be defined',
+      actual: this.actual,
+    };
+    if (!_.isUndefined(this.actual)) {
+      this.resultHandler.success(expectation);
+    } else {
+      this.resultHandler.fail(expectation);
+    }
+  }
 }

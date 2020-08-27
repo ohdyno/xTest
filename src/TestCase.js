@@ -8,7 +8,7 @@ Name: ${result.name}
 Failures:
 ${JSON.stringify(
   result.failures,
-  (key, value) => (typeof value === 'undefined' ? null : value),
+  (key, value) => (typeof value === 'undefined' ? 'undefined' : value),
   4,
 )}`);
     }
