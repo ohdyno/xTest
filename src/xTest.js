@@ -1,5 +1,5 @@
-import { TestCase } from './TestCase';
-import { Expect } from './Expect';
+import { TestCase } from './TestCase/TestCase';
+import { Expect } from './Expectation/Expect';
 
 export function expect(actual, resultHandler) {
   return new Expect(actual, resultHandler);

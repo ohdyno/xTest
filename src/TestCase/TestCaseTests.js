@@ -1,4 +1,4 @@
-import { test } from './xTest';
+import { test } from '../xTest';
 
 export default () => {
   test('default test result handler throws error when test case fails', ({

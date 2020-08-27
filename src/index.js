@@ -1,5 +1,5 @@
-import ExpectationTests from './ExpectationTests';
-import TestCaseTests from './TestCaseTests';
+import ExpectationTests from './Expectation/ExpectationTests';
+import TestCaseTests from './TestCase/TestCaseTests';
 
 ExpectationTests();
 TestCaseTests();

@@ -1,4 +1,4 @@
-import { expect } from './xTest';
+import { expect } from '../xTest';
 
 class TestCaseResultHandler {
   result(result) {
