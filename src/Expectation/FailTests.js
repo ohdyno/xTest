@@ -1,4 +1,5 @@
-import { fail, test } from '../xTest';
+import { test } from '../xTest';
+import { fail } from './Fail';
 
 export default () => {
   test('fail reports a failure to the result handler', ({ expect }) => {
