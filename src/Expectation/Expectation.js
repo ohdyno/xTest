@@ -9,7 +9,7 @@ ${JSON.stringify(expectation, null, 4)}`);
   }
 }
 
-export class Expect {
+class Expectation {
   constructor(actual, resultHandler = new ErrorThrowingExpectResultHandler()) {
     this.resultHandler = resultHandler;
     this.actual = actual;
@@ -38,4 +38,8 @@ export class Expect {
       this.resultHandler.fail(expectation);
     }
   }
+}
+
+export function expect(actual, resultHandler) {
+  return new Expectation(actual, resultHandler);
 }

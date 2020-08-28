@@ -1,4 +1,5 @@
-import { expect as act, test } from '../xTest';
+import { test } from '../xTest';
+import { expect as act } from './Expectation';
 
 export default () => {
   test('a successful expect.toBe', ({ expect }) => {
