@@ -1,6 +1,28 @@
 import { test } from '../xTest';
 
 export default () => {
+  test('fail reports failure to result handler', ({ expect }) => {
+    const testCaseResultHandlerSpy = {
+      result(result) {
+        this.result = result;
+      },
+    };
+
+    test(
+      'a test case with "fail"',
+      ({ fail }) => {
+        fail('a message for failure');
+      },
+      testCaseResultHandlerSpy,
+    );
+
+    expect(testCaseResultHandlerSpy.result.failures).toBe([
+      {
+        message: 'a message for failure',
+      },
+    ]);
+  });
+
   test('default test result handler throws error when test case fails', ({
     expect,
   }) => {

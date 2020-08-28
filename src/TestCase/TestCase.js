@@ -1,4 +1,4 @@
-import { expect } from '../xTest';
+import { expect, fail } from '../xTest';
 
 class TestCaseResultHandler {
   result(result) {
@@ -36,7 +36,10 @@ export class TestCase {
       },
     };
 
-    this.body({ expect: (actual) => expect(actual, resultRecorder) });
+    this.body({
+      expect: (actual) => expect(actual, resultRecorder),
+      fail: (message) => fail(message, resultRecorder),
+    });
 
     resultHandler.result(result);
   }
