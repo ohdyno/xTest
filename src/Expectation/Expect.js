@@ -9,7 +9,7 @@ ${JSON.stringify(expectation, null, 4)}`);
   }
 }
 
-class Expectation {
+class Expect {
   constructor(actual, resultHandler = new ErrorThrowingExpectResultHandler()) {
     this.resultHandler = resultHandler;
     this.actual = actual;
@@ -41,5 +41,5 @@ class Expectation {
 }
 
 export function expect(actual, resultHandler) {
-  return new Expectation(actual, resultHandler);
+  return new Expect(actual, resultHandler);
 }

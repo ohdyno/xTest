@@ -1,7 +1,7 @@
-import ExpectationTests from './Expectation/ExpectationTests';
-import TestCaseTests from './TestCase/TestCaseTests';
-import FailTests from './Expectation/FailTests';
-import xTestTests from './xTestTests';
+import ExpectationTests from './Expectation/Expectation.tests';
+import TestCaseTests from './TestCase/TestCase.tests';
+import FailTests from './Expectation/Fail.tests';
+import xTestTests from './xTest.tests';
 
 ExpectationTests();
 TestCaseTests();

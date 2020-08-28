@@ -1,5 +1,5 @@
 import { fail } from '../Expectation/Fail';
-import { expect } from '../Expectation/Expectation';
+import { expect } from '../Expectation/Expect';
 
 class TestCaseResultHandler {
   result(result) {
