@@ -1,4 +1,4 @@
-import { test } from '../xTest';
+import { test } from '../TestCase/TestCase';
 import { fail } from './Fail';
 
 export default () => {

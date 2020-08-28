@@ -45,3 +45,7 @@ export class TestCase {
     resultHandler.result(result);
   }
 }
+
+export function test(name, body, resultHandler) {
+  new TestCase(name, body).run(resultHandler);
+}
