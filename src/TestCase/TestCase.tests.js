@@ -58,22 +58,6 @@ export default () => {
     ]);
   });
 
-  test('default test result handler throws error when test case fails', ({
-    expect,
-  }) => {
-    let error;
-
-    try {
-      test('a failing test case', ({ expect }) => {
-        expect(true).toBe(false);
-      });
-    } catch (e) {
-      error = e;
-    }
-
-    expect(error).toBeDefined();
-  });
-
   test('an empty test case reports no successes or failures to result handler', ({
     expect,
   }) => {

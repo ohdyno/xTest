@@ -20,8 +20,14 @@ ${JSON.stringify(
   }
 
   fail(result) {
-    throw new Error(`Test Case Failed:
+    console.error(`Test Case Passed:
 Name: ${result.name}
+Successes:
+${JSON.stringify(
+  result.successes,
+  (key, value) => (typeof value === 'undefined' ? 'undefined' : value),
+  4,
+)}
 Failures:
 ${JSON.stringify(
   result.failures,
