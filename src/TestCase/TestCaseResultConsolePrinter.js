@@ -1,41 +1,41 @@
 export class TestCaseResultConsolePrinter {
   success(result) {
-    console.group(`%cTest Case Passed: ${result.name}`, 'color:green');
-    console.group(`Successes`);
+    console.group(`%c${result.name}`, 'color:green');
     result.successes.forEach((success) => {
-      console.log(`${JSON.stringify(
-        success,
-        (key, value) => (typeof value === 'undefined' ? 'undefined' : value),
-        4,
-      )}
-      `);
+      console.log(
+        `%c${JSON.stringify(
+          success,
+          (key, value) => (typeof value === 'undefined' ? 'undefined' : value),
+          4,
+        )}`,
+        'color:green',
+      );
     });
-    console.groupEnd();
     console.groupEnd();
   }
 
   fail(result) {
-    console.group(`%cTest Case Failed: ${result.name}`, 'color:red');
-    console.group(`Successes`);
+    console.group(`%c${result.name}`, 'color:red');
     result.successes.forEach((success) => {
-      console.log(`${JSON.stringify(
-        success,
-        (key, value) => (typeof value === 'undefined' ? 'undefined' : value),
-        4,
-      )}
-      `);
+      console.log(
+        `%c${JSON.stringify(
+          success,
+          (key, value) => (typeof value === 'undefined' ? 'undefined' : value),
+          4,
+        )}`,
+        'color:green',
+      );
     });
-    console.groupEnd();
-    console.group(`%cFailures`, 'color:red');
     result.failures.forEach((failure) => {
-      console.error(`${JSON.stringify(
-        failure,
-        (key, value) => (typeof value === 'undefined' ? 'undefined' : value),
-        4,
-      )}
-      `);
+      console.error(
+        `%c${JSON.stringify(
+          failure,
+          (key, value) => (typeof value === 'undefined' ? 'undefined' : value),
+          4,
+        )}`,
+        'color:red',
+      );
     });
-    console.groupEnd();
     console.groupEnd();
   }
 }
