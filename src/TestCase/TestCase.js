@@ -2,9 +2,25 @@ import { fail } from '../Expectation/Fail';
 import { expect } from '../Expectation/Expect';
 
 class TestCaseResultHandler {
-  result(result) {
-    if (result.failures.length > 0) {
-      throw new Error(`Test Case Failed:
+  success(result) {
+    console.log(`Test Case Passed:
+Name: ${result.name}
+Successes:
+${JSON.stringify(
+  result.successes,
+  (key, value) => (typeof value === 'undefined' ? 'undefined' : value),
+  4,
+)}
+Failures:
+${JSON.stringify(
+  result.failures,
+  (key, value) => (typeof value === 'undefined' ? 'undefined' : value),
+  4,
+)}`);
+  }
+
+  fail(result) {
+    throw new Error(`Test Case Failed:
 Name: ${result.name}
 Failures:
 ${JSON.stringify(
@@ -12,7 +28,6 @@ ${JSON.stringify(
   (key, value) => (typeof value === 'undefined' ? 'undefined' : value),
   4,
 )}`);
-    }
   }
 }
 
@@ -30,13 +45,6 @@ export function test(name, body, resultHandler = new TestCaseResultHandler()) {
     fail(message) {
       result.failures.push(message);
     },
-    result(r) {
-      if (r.failures.length > 0) {
-        result.failures.push(r);
-      } else {
-        result.successes.push(r);
-      }
-    },
   };
 
   body({
@@ -45,5 +53,9 @@ export function test(name, body, resultHandler = new TestCaseResultHandler()) {
     test: (name, body) => test(name, body, resultRecorder),
   });
 
-  resultHandler.result(result);
+  if (result.failures.length > 0) {
+    resultHandler.fail(result);
+  } else {
+    resultHandler.success(result);
+  }
 }

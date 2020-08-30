@@ -3,7 +3,7 @@ import { test } from './TestCase';
 export default () => {
   test('embedding a test case', ({ expect }) => {
     const testCaseResultHandlerSpy = {
-      result(result) {
+      fail(result) {
         this.result = result;
       },
     };
@@ -38,7 +38,7 @@ export default () => {
 
   test('fail reports failure to result handler', ({ expect }) => {
     const testCaseResultHandlerSpy = {
-      result(result) {
+      fail(result) {
         this.result = result;
       },
     };
@@ -78,7 +78,7 @@ export default () => {
     expect,
   }) => {
     const testCaseResultHandlerSpy = {
-      result(result) {
+      success(result) {
         this.result = result;
       },
     };
@@ -95,7 +95,7 @@ export default () => {
     expect,
   }) => {
     const testCaseResultHandlerSpy = {
-      result(result) {
+      success(result) {
         this.result = result;
       },
     };
@@ -124,7 +124,7 @@ export default () => {
     expect,
   }) => {
     const testCaseResultHandlerSpy = {
-      result(result) {
+      fail(result) {
         this.result = result;
       },
     };
@@ -153,7 +153,7 @@ export default () => {
     expect,
   }) => {
     const testCaseResultHandlerSpy = {
-      result(result) {
+      fail(result) {
         this.result = result;
       },
     };
