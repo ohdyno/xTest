@@ -30,11 +30,19 @@ export function test(name, body, resultHandler = new TestCaseResultHandler()) {
     fail(message) {
       result.failures.push(message);
     },
+    result(r) {
+      if (r.failures.length > 0) {
+        result.failures.push(r);
+      } else {
+        result.successes.push(r);
+      }
+    },
   };
 
   body({
     expect: (actual) => expect(actual, resultRecorder),
     fail: (message) => fail(message, resultRecorder),
+    test: (name, body) => test(name, body, resultRecorder),
   });
 
   resultHandler.result(result);

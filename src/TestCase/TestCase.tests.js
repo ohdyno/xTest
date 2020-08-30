@@ -1,6 +1,41 @@
 import { test } from './TestCase';
 
 export default () => {
+  test('embedding a test case', ({ expect }) => {
+    const testCaseResultHandlerSpy = {
+      result(result) {
+        this.result = result;
+      },
+    };
+
+    test(
+      'outer test case',
+      ({ test }) => {
+        test('inside test case', ({ expect }) => {
+          expect(true).toBe(false);
+        });
+      },
+      testCaseResultHandlerSpy,
+    );
+
+    expect(testCaseResultHandlerSpy.result).toBe({
+      name: 'outer test case',
+      failures: [
+        {
+          name: 'inside test case',
+          failures: [
+            {
+              expected: false,
+              actual: true,
+            },
+          ],
+          successes: [],
+        },
+      ],
+      successes: [],
+    });
+  });
+
   test('fail reports failure to result handler', ({ expect }) => {
     const testCaseResultHandlerSpy = {
       result(result) {
