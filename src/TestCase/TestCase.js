@@ -1,43 +1,12 @@
 import { fail } from '../Expectation/Fail';
 import { expect } from '../Expectation/Expect';
+import { TestCaseResultConsolePrinter } from './TestCaseResultConsolePrinter';
 
-class TestCaseResultHandler {
-  success(result) {
-    console.log(`Test Case Passed:
-Name: ${result.name}
-Successes:
-${JSON.stringify(
-  result.successes,
-  (key, value) => (typeof value === 'undefined' ? 'undefined' : value),
-  4,
-)}
-Failures:
-${JSON.stringify(
-  result.failures,
-  (key, value) => (typeof value === 'undefined' ? 'undefined' : value),
-  4,
-)}`);
-  }
-
-  fail(result) {
-    console.error(`Test Case Passed:
-Name: ${result.name}
-Successes:
-${JSON.stringify(
-  result.successes,
-  (key, value) => (typeof value === 'undefined' ? 'undefined' : value),
-  4,
-)}
-Failures:
-${JSON.stringify(
-  result.failures,
-  (key, value) => (typeof value === 'undefined' ? 'undefined' : value),
-  4,
-)}`);
-  }
-}
-
-export function test(name, body, resultHandler = new TestCaseResultHandler()) {
+export function test(
+  name,
+  body,
+  resultHandler = new TestCaseResultConsolePrinter(),
+) {
   const result = {
     name,
     successes: [],
